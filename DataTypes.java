@@ -3,7 +3,7 @@ public  class DataTypes{
         byte a = 45;
         short b = 1277;
         int c = 7899;
-        long bigNumer = 45454545454545643213131L;
+        long bigNumer = 1232323232323L;
         float floatNum= 15.3f;
         double doubleNum = 789.65;
         boolean isReady = true;
