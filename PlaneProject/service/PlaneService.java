@@ -12,6 +12,7 @@ public class PlaneService {
         System.out.println(" Enter model");
         String model = sc.next();
         System.out.println(" Enter country");
+        sc.nextLine();
         String country = sc.next();
         System.out.println(" Enter year");
         int year = sc.nextInt();
@@ -20,7 +21,7 @@ public class PlaneService {
         System.out.println(" Enter if military");
         boolean military = sc.nextBoolean();
         System.out.println(" Enter engineType");
-
+        sc.nextLine();
         String engineType = sc.next();
         System.out.println(" Enter weight");
         int weight = sc.nextInt();
