@@ -11,8 +11,9 @@ public class PlaneService {
         Scanner sc = new Scanner(System.in);
         System.out.println(" Enter model");
         String model = sc.next();
-        System.out.println(" Enter country");
         sc.nextLine();
+        System.out.println(" Enter country");
+
         String country = sc.next();
         System.out.println(" Enter year");
         int year = sc.nextInt();
@@ -20,9 +21,10 @@ public class PlaneService {
         int hours = sc.nextInt();
         System.out.println(" Enter if military");
         boolean military = sc.nextBoolean();
-        System.out.println(" Enter engineType");
         sc.nextLine();
-        String engineType = sc.next();
+        System.out.println(" Enter engineType");
+
+        String engineType = sc.nextLine();
         System.out.println(" Enter weight");
         int weight = sc.nextInt();
         System.out.println(" Enter wing span");
