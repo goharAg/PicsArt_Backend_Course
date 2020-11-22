@@ -1,6 +1,6 @@
 package OnlineLibraryProject;
 
-public class Account {
+public abstract class Account implements Registration {
     private String name;
     private String surname;
 

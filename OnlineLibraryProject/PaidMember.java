@@ -2,7 +2,7 @@ package OnlineLibraryProject;
 
 import java.util.Date;
 
-public class PaidMember extends Account {
+public class PaidMember extends Account implements  UserFunctionality {
 
     private int fee;
 
@@ -37,6 +37,36 @@ public class PaidMember extends Account {
 
 
     public void pay(int ammount){
+
+    }
+
+    @Override
+    public void register() {
+
+    }
+
+    @Override
+    public void login() {
+
+    }
+
+    @Override
+    public void logout() {
+
+    }
+
+    @Override
+    public void renewBook(BookItem b) {
+
+    }
+
+    @Override
+    public void reserveBook(BookItem b) {
+
+    }
+
+    @Override
+    public void returnBook(BookItem b) {
 
     }
 }

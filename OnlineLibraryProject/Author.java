@@ -1,6 +1,6 @@
 package OnlineLibraryProject;
 
-public class Author {
+public class Author  {
 
     private String name;
     private String surname;
