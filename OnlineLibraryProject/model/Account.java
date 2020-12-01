@@ -1,4 +1,6 @@
-package OnlineLibraryProject;
+package OnlineLibraryProject.model;
+
+import OnlineLibraryProject.interfaces.Registration;
 
 public abstract class Account implements Registration {
     private String name;

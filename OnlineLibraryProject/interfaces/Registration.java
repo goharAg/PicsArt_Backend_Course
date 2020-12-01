@@ -1,4 +1,4 @@
-package OnlineLibraryProject;
+package OnlineLibraryProject.interfaces;
 
 public interface Registration {
 
