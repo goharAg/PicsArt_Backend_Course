@@ -1,34 +1,35 @@
 package OnlineLibraryProject.service;
 
 import OnlineLibraryProject.model.AudioBook;
+import OnlineLibraryProject.model.Book;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 
 public class AudioBookService {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/audiobookFile";
+    FileService fs = new FileService();
+    HashSet<AudioBook> allAudioBooks;
 
-    public AudioBook createAB(String title, String author,String genre, String lang, String nar, int len  )  {
-        AudioBook ab = new AudioBook(title,author,genre,lang,nar,len );
+    public AudioBookService(){
+        allAudioBooks = new HashSet<>();
+        updateAudioBooks();
+    }
 
 
+    public AudioBook create(String title, String author, String genre, String lang, String nar, int len) {
+        AudioBook ab = new AudioBook(title, author, genre, lang, nar, len);
         System.out.println("AudioBook is created");
         return ab;
     }
 
-    public AudioBook createAndWriteAB(String title, String author,String genre, String lang, String nar, int len  )  {
-        AudioBook ab = new AudioBook(title,author,genre,lang,nar,len );
-        writeAudioBook(ab);
 
-
-        return ab;
-    }
-
-    public AudioBook createAB()  {
+    public AudioBook create() {
         Scanner sc = new Scanner(System.in);
         System.out.print("Input title: ");
         String title = sc.nextLine();
@@ -38,7 +39,7 @@ public class AudioBookService {
         String author = sc.nextLine();
         System.out.println(" author: " + author);
 
-        System.out.print("\nInput genre: " );
+        System.out.print("\nInput genre: ");
         String genre = sc.nextLine();
         System.out.println("genre: " + genre);
 
@@ -51,72 +52,35 @@ public class AudioBookService {
         sc.nextLine();
         System.out.print("\nInput length: ");
         int len = sc.nextInt();
-        System.out.println("length: "+len);
+        System.out.println("length: " + len);
 
-        AudioBook ab = createAndWriteAB(title,author,genre,lang,nar,len  );
+        AudioBook ab = create(title, author, genre, lang, nar, len);
+        fs.write(Paths.get(url), ab);
+        allAudioBooks.add(ab);
         return ab;
     }
 
-    public AudioBook createAB(String[] stringParts)  {
-        AudioBook ab = createAB(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4],Integer.parseInt(stringParts[5]));
-
+    public AudioBook create(String[] stringParts) {
+        AudioBook ab = create(stringParts[0], stringParts[1], stringParts[2], stringParts[3], stringParts[4], Integer.parseInt(stringParts[5]));
         return ab;
-
     }
 
-    public void writeAudioBook( AudioBook ab)  {
-        Path p = Paths.get(url);
-        String fileText = ab.getTitle() +","+ab.getAuthor()+","+ab.getGenre()+","+ab.getLang()+","+ab.getNarrator()+","+ab.getLength()+"\n" ;
-       try {
-           Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
-       }catch(IOException e){
-
-       }
-
-
-    }
-    public void clearFile(){
-        Path p = Paths.get(url);
-        String fileText = "" ;
-        try {
-            Files.write(p, fileText.getBytes());
-        }
-        catch(IOException e){
-
-        }
-    }
-
-    public void writeAudioBooks( AudioBook[] ab) {
-      for(int i = 0; i < ab.length;i++){
-          writeAudioBook(ab[i]);
-      }
-    }
-
-    private AudioBook[] fetchAB() {
-
-        Path p = Paths.get(url);
-        String[] strings;
-        try {
-            strings = Files.readAllLines(p).toArray(new String[0]);
+    public void updateAudioBooks()  {
+        List<String> l;
+        try{
+            l = fs.read(Paths.get(url));
         }catch(IOException e){
-            strings = new String[0];
-        }
-        AudioBook[] audioBArray = new AudioBook[strings.length];
-
-
-
-        for(int j = 0; j< strings.length; j++){
-            String[] stringParts = strings[j].split("[,]");
-            AudioBook ab = createAB(stringParts);
-            audioBArray[j] = ab;
-
+            return;
         }
 
-        return audioBArray;
+        for(String s : l){
+            String[] stringParts = s.split("[,]");
+            allAudioBooks.add(create(stringParts));
+        }
     }
 
-    public void printFullInfo(AudioBook ab){
-        System.out.print(ab.getTitle() + " " );
+    public void printFullInfo(AudioBook ab) {
+        System.out.print(ab.getTitle() + " ");
         System.out.print("by " + ab.getAuthor());
         System.out.print(" : " + ab.getGenre());
         System.out.print(" in " + ab.getLang());
@@ -124,19 +88,15 @@ public class AudioBookService {
 
     }
 
-    public void printShortInfo(AudioBook ab){
-        System.out.print(ab.getTitle() + " " );
+    public void printShortInfo(AudioBook ab) {
+        System.out.print(ab.getTitle() + " ");
         System.out.print("by " + ab.getAuthor() + "\n");
     }
 
-    public AudioBook[] allAudioBooks()  {
-        AudioBook[] ab = fetchAB();
-        return ab;
+    public HashSet allAudioBooks() {
+        return allAudioBooks;
 
     }
-
-
-
 
 
 }
