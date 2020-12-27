@@ -2,26 +2,29 @@ package OnlineLibraryProject.service;
 
 import OnlineLibraryProject.model.Ebook;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 
 public class EbookService {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/ebookFile";
+    HashSet<Ebook> allEBooks;
+    FileService fs = new FileService();
 
-    public Ebook createEbook(String title, String author,String genre, String lang,String format)  {
-        Ebook ab = new Ebook(title,author,genre,lang, format);
-
-        return ab;
+    public EbookService(){
+        allEBooks = new HashSet<>();
+        updateEBooks();
     }
 
-    public Ebook createAndWriteEbook(String title, String author,String genre, String lang,String format)  {
-        Ebook ab = new Ebook(title,author,genre,lang, format);
-        writeEbook(ab);
-        return ab;
+
+    public Ebook createEbook(String title, String author,String genre, String lang,String format)  {
+        return new Ebook(title,author,genre,lang, format);
     }
 
     public Ebook createEbook(){
@@ -42,69 +45,31 @@ public class EbookService {
         System.out.print("\nInput format: ");
         String format = sc.next();
 
-        Ebook ab = createAndWriteEbook(title,author,genre,lang,format  );
+        Ebook ab = createEbook(title,author,genre,lang,format  );
+        fs.write(Paths.get(url), ab);
+        allEBooks.add(ab);
         return ab;
     }
 
     public Ebook createEbook(String[] stringParts)  {
-        Ebook ab = createEbook(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4]);
-
-        return ab;
-
+        return createEbook(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4]);
     }
 
-    public void writeEbook( Ebook ab)  {
-        Path p = Paths.get(url);
-        String  fileText = ab.getTitle() + "," + ab.getAuthor() + "," + ab.getGenre() + "," + ab.getLang() + "," + ab.getFormat() + "\n";
-        try {
-            Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
+    public void updateEBooks()  {
+        List<String> l;
+        try{
+            l = fs.read(Paths.get(url));
         }catch(IOException e){
-            return ;
+            return;
         }
 
-
-
-    }
-
-    public void writeEbooks( Ebook[] ab){
-        for(int i = 0; i < ab.length;i++){
-            writeEbook(ab[i]);
+        for(String s : l){
+            String[] stringParts = s.split("[,]");
+            allEBooks.add(createEbook(stringParts));
         }
     }
 
-    public void clearFile(){
-        Path p = Paths.get(url);
-        String fileText = "" ;
-        try {
-            Files.write(p, fileText.getBytes());
-        }
-        catch(IOException e){
 
-        }
-    }
-
-    private Ebook[] fetchAB()  {
-
-        Path p = Paths.get(url);
-        String[] strings;
-        try {
-             strings = Files.readAllLines(p).toArray(new String[0]);
-        }catch(IOException e){
-            strings = new String[0];
-        }
-        Ebook[] audioBArray = new Ebook[strings.length];
-
-
-
-        for(int j = 0; j< strings.length; j++){
-            String[] stringParts = strings[j].split("[,]");
-            Ebook ab = createEbook(stringParts);
-            audioBArray[j] = ab;
-
-        }
-
-        return audioBArray;
-    }
 
     public void printFullInfo(Ebook ab){
         System.out.print(ab.getTitle() + " " );
@@ -123,14 +88,8 @@ public class EbookService {
 
 
 
-    public Ebook[] allEbooks() {
-        Ebook[] ab = fetchAB();
-        return ab;
-
+    public HashSet allEbooks() {
+        return allEBooks;
     }
-
-
-
-
 
 }
