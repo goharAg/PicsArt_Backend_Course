@@ -24,9 +24,6 @@ public class Catalog implements Search {
 
 
     public Catalog()  {
-//    ab = audioService.allAudioBooks();
-//    eb = ebService.allEbooks();
-//    pb = pbService.allPaperBooks();
 
     allBooks = new HashMap<>();
     allBooks.put("AudioBook", audioService.allAudioBooks());
@@ -142,6 +139,8 @@ public class Catalog implements Search {
         System.out.println("AudioBook added.");
 
     }
+
+
 
     public void addEBook()  {
         Ebook eb = ebService.createEbook();

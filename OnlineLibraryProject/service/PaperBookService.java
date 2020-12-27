@@ -20,6 +20,7 @@ public class PaperBookService {
 
     public PaperBookService(){
         allPaperBooks = new HashSet<>();
+        updatePaperBooks();
     }
 
 

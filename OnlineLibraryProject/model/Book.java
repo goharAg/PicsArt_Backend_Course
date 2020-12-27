@@ -1,16 +1,16 @@
 package OnlineLibraryProject.model;
 
+import java.util.Objects;
+
 public abstract class Book {
     private String title;
-
     private String genre;
     private String lang;
-
-
-
     private String author;
+    private String type;
 
-    public Book(String title,  String genre, String lang, String author) {
+    public Book(String type, String title,  String genre, String lang, String author) {
+        this.type = type;
         setTitle(title);
         setAuthor(author);
         setGenre(genre);
@@ -51,7 +51,18 @@ public abstract class Book {
         this.author = author;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return getTitle().equals(book.getTitle()) &&
+                getAuthor().equals(book.getAuthor()) &&
+                type.equals(book.type);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(getTitle(), getAuthor(), type);
+    }
 }

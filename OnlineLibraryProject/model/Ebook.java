@@ -10,7 +10,7 @@ public class Ebook  extends Book{
 
 
     public Ebook(String title,String author,String genre, String lang,  String format ){
-        super(title, genre, lang, author);
+        super("Ebook",title, genre, lang, author);
         setFormat(format);
 
 
