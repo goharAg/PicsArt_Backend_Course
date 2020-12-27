@@ -10,7 +10,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
 public class EbookService {
-    private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/service/ebookFile";
+    private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/ebookFile";
 
     public Ebook createEbook(String title, String author,String genre, String lang,String format)  {
         Ebook ab = new Ebook(title,author,genre,lang, format);

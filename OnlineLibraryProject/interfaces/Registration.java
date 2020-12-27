@@ -3,7 +3,7 @@ package OnlineLibraryProject.interfaces;
 public interface Registration {
 
     public  void register() ;
-    public void login();
+    public boolean login();
     public void logout();
 
 }
