@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class AudioBookService {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/audiobookFile";
     FileService fs = new FileService();
-    HashSet<AudioBook> allAudioBooks;
+    HashSet<Book> allAudioBooks;
 
     public AudioBookService(){
         allAudioBooks = new HashSet<>();
@@ -93,7 +93,7 @@ public class AudioBookService {
         System.out.print("by " + ab.getAuthor() + "\n");
     }
 
-    public HashSet allAudioBooks() {
+    public HashSet<Book> allAudioBooks() {
         return allAudioBooks;
 
     }

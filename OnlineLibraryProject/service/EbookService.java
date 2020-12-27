@@ -1,5 +1,6 @@
 package OnlineLibraryProject.service;
 
+import OnlineLibraryProject.model.Book;
 import OnlineLibraryProject.model.Ebook;
 
 import java.io.File;
@@ -14,11 +15,11 @@ import java.util.Scanner;
 
 public class EbookService {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/ebookFile";
-    HashSet<Ebook> allEBooks;
+    HashSet<Book> allEBooks;
     FileService fs = new FileService();
 
     public EbookService(){
-        allEBooks = new HashSet<>();
+        allEBooks = new HashSet<Book>();
         updateEBooks();
     }
 
@@ -88,7 +89,7 @@ public class EbookService {
 
 
 
-    public HashSet allEbooks() {
+    public HashSet<Book> allEbooks() {
         return allEBooks;
     }
 

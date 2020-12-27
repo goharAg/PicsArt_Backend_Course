@@ -32,7 +32,6 @@ public class UserService implements Registration {
         try{
             l = fs.read(p);
         }catch(IOException e){
-            l = new ArrayList<String>() ;
             return;
         }
 

@@ -1,6 +1,7 @@
 package OnlineLibraryProject.service;
 
 
+import OnlineLibraryProject.model.Book;
 import OnlineLibraryProject.model.PaperBook;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.Scanner;
 
 public class PaperBookService {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/paperbookFile";
-    private HashSet<PaperBook> allPaperBooks;
+    private HashSet<Book> allPaperBooks;
     private FileService fs = new FileService();
 
     public PaperBookService(){
@@ -89,7 +90,7 @@ public class PaperBookService {
         System.out.print("by " + ab.getAuthor() + "\n");
     }
 
-    public HashSet allPaperBooks()  {
+    public HashSet<Book> allPaperBooks()  {
        return allPaperBooks;
 
     }
