@@ -8,22 +8,26 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 
 public class PaperBookService {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/paperbookFile";
+    private HashSet<PaperBook> allPaperBooks;
+    private FileService fs = new FileService();
+
+    public PaperBookService(){
+        allPaperBooks = new HashSet<>();
+    }
+
 
     public PaperBook createPaperBook(String title, String author,String genre, String lang,String pubComp)  {
         PaperBook ab = new PaperBook(title,author,genre,lang, pubComp);
-
         return ab;
     }
 
-    public PaperBook createAndWritePaperBook(String title, String author,String genre, String lang,String pubComp)  {
-        PaperBook ab = new PaperBook(title,author,genre,lang, pubComp);
-        writePaperBook(ab);
-        return ab;
-    }
+
 
     public PaperBook createPaperBook()  {
         Scanner sc = new Scanner(System.in);
@@ -43,69 +47,32 @@ public class PaperBookService {
         System.out.print("\nInput publishing company: ");
         String format = sc.nextLine();
         sc.nextLine();
-        PaperBook ab = createAndWritePaperBook(title,author,genre,lang,format  );
+        PaperBook ab = createPaperBook(title,author,genre,lang,format  );
+        fs.write(Paths.get(url), ab);
         return ab;
     }
 
     public PaperBook createPaperBook(String[] stringParts)  {
         PaperBook ab = createPaperBook(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4]);
-
         return ab;
 
     }
 
-    public void writePaperBook( PaperBook ab)  {
-        Path p = Paths.get(url);
-        String fileText = ab.getTitle() +","+ab.getAuthor()+","+ab.getGenre()+","+ab.getLang()+","+ab.getPublishingCompany()+"\n" ;
-        try {
-            Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
+    public void updatePaperBooks()  {
+        List<String> l;
+        try{
+            l = fs.read(Paths.get(url));
         }catch(IOException e){
-            System.out.println("IOException");
-            return ;
+            return;
         }
 
-
-    }
-
-    public void writePaperBooks( PaperBook[] ab)  {
-        for(int i = 0; i < ab.length;i++){
-            writePaperBook(ab[i]);
+        for(String s : l){
+            String[] stringParts = s.split("[,]");
+            allPaperBooks.add(createPaperBook(stringParts));
         }
     }
 
-    public void clearFile(){
-        Path p = Paths.get(url);
-        String fileText = "" ;
-        try {
-            Files.write(p, fileText.getBytes());
-        }
-        catch(IOException e){
 
-        }
-    }
-
-    private PaperBook[] fetchAB()  {
-
-        Path p = Paths.get(url);
-        String[] strings;
-        try {
-            strings = Files.readAllLines(p).toArray(new String[0]);
-        }catch(IOException e){
-            strings = new String[0];
-        }
-        PaperBook[] audioBArray = new PaperBook[strings.length];
-
-
-
-        for(int j = 0; j< strings.length; j++){
-            String[] stringParts = strings[j].split("[,]");
-            PaperBook ab = createPaperBook(stringParts);
-            audioBArray[j] = ab;
-
-        }
-
-        return audioBArray;
-    }
 
     public void printFullInfo(PaperBook ab){
         System.out.print(ab.getTitle() + " " );
@@ -122,9 +89,8 @@ public class PaperBookService {
         System.out.print("by " + ab.getAuthor() + "\n");
     }
 
-    public PaperBook[] allPaperBooks()  {
-        PaperBook[] ab = fetchAB();
-        return ab;
+    public HashSet allPaperBooks()  {
+       return allPaperBooks;
 
     }
 

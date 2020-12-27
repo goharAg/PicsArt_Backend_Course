@@ -1,9 +1,6 @@
 package OnlineLibraryProject.service;
 
-import OnlineLibraryProject.model.AudioBook;
-import OnlineLibraryProject.model.Book;
-import OnlineLibraryProject.model.Ebook;
-import OnlineLibraryProject.model.User;
+import OnlineLibraryProject.model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,11 +34,20 @@ public class FileService {
     }
 
     public void write(Path p, Ebook ab)  {
-
         String  fileText = ab.getTitle() + "," + ab.getAuthor() + "," + ab.getGenre() + "," + ab.getLang() + "," + ab.getFormat() + "\n";
         try {
             Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
         }catch(IOException e){
+            return ;
+        }
+    }
+
+    public void write(Path p, PaperBook ab)  {
+        String fileText = ab.getTitle() +","+ab.getAuthor()+","+ab.getGenre()+","+ab.getLang()+","+ab.getPublishingCompany()+"\n" ;
+        try {
+            Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
+        }catch(IOException e){
+            System.out.println("IOException");
             return ;
         }
     }
