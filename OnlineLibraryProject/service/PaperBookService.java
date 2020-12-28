@@ -36,19 +36,18 @@ public class PaperBookService extends Service {
         System.out.print("Input title: ");
         String title = sc.nextLine();
 
-        System.out.print("\nInput author: ");
+        System.out.print("Input author: ");
         String author = sc.nextLine();
 
-        System.out.print("\nInput genre: ");
+        System.out.print("Input genre: ");
         String genre = sc.next();
-        sc.nextLine();
 
-        System.out.print("\nInput language: ");
+        System.out.print("Input language: ");
         String lang = sc.next();
         sc.nextLine();
-        System.out.print("\nInput publishing company: ");
+        System.out.print("Input publishing company: ");
         String format = sc.nextLine();
-        sc.nextLine();
+
         PaperBook ab = createPaperBook(title,author,genre,lang,format  );
         fs.write(Paths.get(url), ab);
         return ab;

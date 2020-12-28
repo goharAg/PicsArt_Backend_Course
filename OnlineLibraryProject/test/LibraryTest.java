@@ -21,16 +21,14 @@ public class LibraryTest {
             System.out.println("2. Register");
 
             int choice = sc.nextInt();
-            sc.nextLine();
+
             switch (choice){
                 case 1:
-                    if( us.login()){
-                        loggedIn = true;
-                    }
-
+                        loggedIn = us.login();
                     break;
                 case 2:
                     us.register();
+
                     break;
 
             }
@@ -38,6 +36,7 @@ public class LibraryTest {
 
         if (loggedIn) {
             while (!quit) {
+                System.out.printf("%10s%n","MENU");
                 System.out.println("1. Show All Books");
                 System.out.println("2. Show Only AudioBooks");
                 System.out.println("3. Show Only EBooks");
@@ -77,7 +76,7 @@ public class LibraryTest {
                             int n = sc.nextInt();
 
                             if (n == 1) {
-                                System.out.println("1");
+
                                 type = "AudioBook";
                                 answeredCorrectly = true;
                                 ct.addBook(type);
@@ -102,9 +101,9 @@ public class LibraryTest {
                         boolean rightInput = false;
                         while (!rightInput) {
                             System.out.println("Do you want to search the book by");
-                            System.out.println("1. title ");
-                            System.out.println("2. author");
-                            System.out.println("3. genre");
+                            System.out.println("1. Title ");
+                            System.out.println("2. Author");
+                            System.out.println("3. Genre");
                             int nn = sc.nextInt();
                             if (nn == 1) {
                                 sc.nextLine();
@@ -135,8 +134,8 @@ public class LibraryTest {
                         boolean numChoice = false;
                         while (!numChoice) {
                             System.out.println("Do you want to sort the book by");
-                            System.out.println("1. title ");
-                            System.out.println("2. author");
+                            System.out.println("1. Title ");
+                            System.out.println("2. Author");
 
                             int nch = sc.nextInt();
                             if (nch == 1) {

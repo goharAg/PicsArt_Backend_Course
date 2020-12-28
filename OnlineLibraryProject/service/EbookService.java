@@ -32,18 +32,18 @@ public class EbookService extends Service {
         Scanner sc = new Scanner(System.in);
         System.out.print("Input title: ");
         String title = sc.nextLine();
-        sc.nextLine();
-        System.out.print("\nInput author: ");
-        String author = sc.nextLine();
-        sc.nextLine();
-        System.out.print("\nInput genre: ");
-        String genre = sc.next();
-        sc.nextLine();
 
-        System.out.print("\nInput language: ");
+        System.out.print("Input author: ");
+        String author = sc.nextLine();
+
+        System.out.print("Input genre: ");
+        String genre = sc.next();
+
+
+        System.out.print("Input language: ");
         String lang = sc.next();
-        sc.nextLine();
-        System.out.print("\nInput format: ");
+
+        System.out.print("Input format: ");
         String format = sc.next();
 
         Ebook ab = createEbook(title,author,genre,lang,format  );

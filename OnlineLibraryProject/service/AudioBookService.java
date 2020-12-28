@@ -25,7 +25,7 @@ public class AudioBookService extends Service {
 
     public AudioBook create(String title, String author, String genre, String lang, String nar, int len) {
         AudioBook ab = new AudioBook(title, author, genre, lang, nar, len);
-        System.out.println("AudioBook is created");
+
         return ab;
     }
 
@@ -34,26 +34,26 @@ public class AudioBookService extends Service {
         Scanner sc = new Scanner(System.in);
         System.out.print("Input title: ");
         String title = sc.nextLine();
-        System.out.println(" title: " + title);
 
-        System.out.print("\nInput author: ");
+
+        System.out.print("Input author: ");
         String author = sc.nextLine();
-        System.out.println(" author: " + author);
 
-        System.out.print("\nInput genre: ");
+
+        System.out.print("Input genre: ");
         String genre = sc.nextLine();
-        System.out.println("genre: " + genre);
 
-        System.out.print("\nInput narrator: ");
+
+        System.out.print("Input narrator: ");
         String nar = sc.nextLine();
-        System.out.println("narrator: " + nar);
-        System.out.print("\nInput language: ");
+
+        System.out.print("Input language: ");
         String lang = sc.next();
-        System.out.println("language: " + lang);
-        sc.nextLine();
-        System.out.print("\nInput length: ");
+
+
+        System.out.print("Input length: ");
         int len = sc.nextInt();
-        System.out.println("length: " + len);
+
 
         AudioBook ab = create(title, author, genre, lang, nar, len);
         fs.write(Paths.get(url), ab);
@@ -77,7 +77,7 @@ public class AudioBookService extends Service {
         for(String s : l){
             if(s.isEmpty())
                 continue;
-            System.out.println(s);
+
             String[] stringParts = s.split("[,]");
             allAudioBooks.add(create(stringParts));
         }

@@ -19,7 +19,7 @@ public class FileService {
     }
 
     public void write(Path p,User user) throws IOException {
-        System.out.println(user.getUsername());
+
         String text = user.getFullName() +"," + user.getUsername() + "," + user.getEmail()+ ","+user.getPassword()+"\n";
         Files.write(p, text.getBytes(), StandardOpenOption.APPEND );
     }

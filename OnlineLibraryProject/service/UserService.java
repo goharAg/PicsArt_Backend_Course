@@ -51,7 +51,7 @@ public class UserService implements Registration {
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(usn);
         if(m.matches() && !users.containsKey(usn)){
-            System.out.println("Valid username");
+
             return true;
         }else{
             System.out.println("Not valid username");
@@ -63,7 +63,7 @@ public class UserService implements Registration {
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(email);
         if(m.matches()){
-            System.out.println("Valid email");
+
             return true;
         }else{
             System.out.println("Not valid email");
@@ -75,10 +75,10 @@ public class UserService implements Registration {
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(psw);
         if(m.matches()){
-            System.out.println("Valid password");
+
             return true;
         }else{
-            System.out.println("Not valid pasword");
+            System.out.println("Not valid password");
             return false;
         }
 
@@ -90,16 +90,17 @@ public class UserService implements Registration {
     @Override
     public void register() {
         sc.nextLine();
+        System.out.println("Please input");
         System.out.print("Full name: ");
         String fullname = sc.nextLine();
-        System.out.println("\nUsername should contain more than 10 digits");
-        System.out.print("\nUsername: ");
+        System.out.println("Username should contain more than 10 digits");
+        System.out.print("Username: ");
         String username = sc.next();
 
-        System.out.print("\nEmail: ");
+        System.out.print("Email: ");
         String email = sc.next();
-        System.out.println("\nUPassword should contain at least 2 UPPERCASE letters, 3 numbers, and has length at least 8");
-        System.out.print("\nPassword: ");
+        System.out.println("Password should contain at least 2 UPPERCASE letters, 3 numbers, and has length at least 8");
+        System.out.print("Password: ");
         String password = sc.next();
 
 
@@ -113,7 +114,8 @@ public class UserService implements Registration {
             }
 
             users.put(username,password);
-            System.out.println("Registration succesful!");
+            System.out.println("Registration was successful!");
+
 
         }else {
             System.out.println("Not valid input");
@@ -144,16 +146,15 @@ public class UserService implements Registration {
 
     @Override
     public boolean login() {
-        System.out.print("\nUsername: ");
+        System.out.print("Username: ");
         String username = sc.next();
-        System.out.print("\nPassword: ");
+        System.out.print("Password: ");
         String pw = sc.next();
 
         if(checkPassword(username,md5(pw))){
-            System.out.println("right");
             return true;
         }else{
-            System.out.println("not right");
+            System.out.println("Password wasn't right");
             return false;
         }
 
