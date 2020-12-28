@@ -1,5 +1,6 @@
 package OnlineLibraryProject.service;
 
+import OnlineLibraryProject.exceptions.InvalidInputException;
 import OnlineLibraryProject.interfaces.Registration;
 import OnlineLibraryProject.model.User;
 
@@ -46,7 +47,7 @@ public class UserService implements Registration {
         return new User(fullname,username,email,password);
 
     }
-    private static boolean validateUsername(  String usn ) {
+    private static boolean validateUsername(  String usn ) throws InvalidInputException {
         String REGEX = "(.*).{10,}";
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(usn);
@@ -54,11 +55,12 @@ public class UserService implements Registration {
 
             return true;
         }else{
-            System.out.println("Not valid username");
-            return false;
+            throw new InvalidInputException("Not valid username");
+
+
         }
     }
-    private static boolean validateEmail(String email){
+    private static boolean validateEmail(String email) throws InvalidInputException {
         String REGEX = "(.+)@[a-zA-Z]+[.][a-z]+";
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(email);
@@ -66,11 +68,11 @@ public class UserService implements Registration {
 
             return true;
         }else{
-            System.out.println("Not valid email");
-            return false;
+            throw new InvalidInputException("Not valid email");
+
         }
     }
-    private static boolean validatePassword(String psw){
+    private static boolean validatePassword(String psw) throws InvalidInputException {
         String REGEX = "((?=(.*\\d){3,})(?=.*[A-Z]))[0-9a-zA-Z!@#$%]{8,}";
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(psw);
@@ -78,8 +80,8 @@ public class UserService implements Registration {
 
             return true;
         }else{
-            System.out.println("Not valid password");
-            return false;
+            throw new InvalidInputException("Not valid Password.");
+
         }
 
     }
@@ -89,6 +91,7 @@ public class UserService implements Registration {
 
     @Override
     public void register() {
+        String password, email,username;
 
         System.out.println("Please input");
         System.out.print("First name: ");
@@ -96,33 +99,37 @@ public class UserService implements Registration {
         System.out.print("Last name: ");
         String lastname = sc.next();
         System.out.println("Username should contain more than 10 digits");
-        System.out.print("Username: ");
-        String username = sc.next();
-
-        System.out.print("Email: ");
-        String email = sc.next();
-        System.out.println("Password should contain at least 2 UPPERCASE letters, 3 numbers, and has length at least 8");
-        System.out.print("Password: ");
-        String password = sc.next();
-
-        String fullname = firstname + " " + lastname;
-        if(validateUsername(username) && validateEmail(email) && validatePassword(password)){
-            password = md5(password);
-           User newUser = createUser(fullname,username,email,password);
-            try{
-                fs.write(p,newUser);
-            }catch(Exception e){
-                System.out.println("Something went wrong!");
-            }
-
-            users.put(username,password);
-            System.out.println("Registration was successful!");
-
-
-        }else {
-            System.out.println("Registration failed. Not valid input");
+        try {
+            System.out.print("Username: ");
+            username = sc.next();
+            validateUsername(username);
+            System.out.print("Email: ");
+            email = sc.next();
+            validateEmail(email);
+            System.out.println("Password should contain at least 2 UPPERCASE letters, 3 numbers, and has length at least 8");
+            System.out.print("Password: ");
+            password = sc.next();
+            validatePassword(password);
+        }catch(InvalidInputException e){
+            System.out.println(e.getMessage());
+            System.out.println("Registration Failed");
             return;
         }
+
+        String fullname = firstname + " " + lastname;
+
+        password = md5(password);
+        User newUser = createUser(fullname,username,email,password);
+        try{
+              fs.write(p,newUser);
+        }catch(IOException e){
+              System.out.println("File not found");
+        }
+
+        users.put(username,password);
+        System.out.println("Registration was successful!");
+
+
 
 
     }
