@@ -37,6 +37,8 @@ public class UserService implements Registration {
         }
 
         for( String x: l){
+            if(x.isEmpty())
+                continue;
             String[] parts = x.split(",");
             users.put(parts[1], parts[3]);
         }

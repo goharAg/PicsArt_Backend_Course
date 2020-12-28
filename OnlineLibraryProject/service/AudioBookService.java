@@ -23,7 +23,7 @@ public class AudioBookService extends Service {
     }
 
 
-    public AudioBook create(String title, String author, String genre, String lang, String nar, int len,int rate) {
+    public AudioBook create(String title, String author, String genre, String lang, String nar, double len,int rate) {
         AudioBook ab = new AudioBook(title, author, genre, lang, nar, len, rate);
 
         return ab;
@@ -50,9 +50,9 @@ public class AudioBookService extends Service {
         System.out.print("Input language: ");
         String lang = sc.next();
 
-
+        System.out.println("Input with hours, e.g 1, 2.5, 3.6 ...");
         System.out.print("Input length: ");
-        int len = sc.nextInt();
+        double len = sc.nextDouble();
 
         System.out.println("Out of 5 stars ");
         System.out.print("Input rating: ");
@@ -66,7 +66,7 @@ public class AudioBookService extends Service {
     }
 
     public AudioBook create(String[] stringParts) {
-        AudioBook ab = create(stringParts[0], stringParts[1], stringParts[2], stringParts[3], stringParts[4], Integer.parseInt(stringParts[5]), Integer.parseInt(stringParts[6]));
+        AudioBook ab = create(stringParts[0], stringParts[1], stringParts[2], stringParts[3], stringParts[4], Double.parseDouble(stringParts[5]), Integer.parseInt(stringParts[6]));
         return ab;
     }
 

@@ -27,7 +27,7 @@ public class FileService {
     public void write(Path p, AudioBook ab)  {
         StringBuilder fileText = new StringBuilder();
 
-        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getNarrator()).append(",").append(ab.getLength()).append(System.lineSeparator());
+        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getNarrator()).append(",").append(ab.getLength()).append(",").append(ab.getRating()).append(System.lineSeparator());
         try {
             Files.write(p, fileText.toString().getBytes(), StandardOpenOption.APPEND);
         }catch(IOException e){
@@ -39,7 +39,7 @@ public class FileService {
 
     public void write(Path p, Ebook ab)  {
         StringBuilder fileText = new StringBuilder();
-        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getFormat()).append(System.lineSeparator());
+        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getFormat()).append(",").append(ab.getRating()).append(System.lineSeparator());
 
         try {
             Files.write(p, fileText.toString().getBytes(), StandardOpenOption.APPEND);
@@ -51,7 +51,7 @@ public class FileService {
 
     public void write(Path p, PaperBook ab)  {
         StringBuilder fileText = new StringBuilder();
-        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getPublishingCompany()).append(System.lineSeparator());
+        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getPublishingCompany()).append(",").append(ab.getRating()).append(System.lineSeparator());
 
 
         try {

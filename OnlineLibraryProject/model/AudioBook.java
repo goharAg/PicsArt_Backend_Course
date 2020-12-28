@@ -6,12 +6,12 @@ import java.util.Date;
 
 public class AudioBook extends Book {
     private String narrator;
-    private int length;
+    private double length;
 
 
 
 
-    public AudioBook(String title,String author,  String genre, String lang, String nar, int len,int rate ){
+    public AudioBook(String title,String author,  String genre, String lang, String nar, double len,int rate ){
         super(BookTypes.AUDIOBOOK,title, genre, lang, author,rate);
         setNarrator(nar);
         setLength(len);
@@ -27,11 +27,11 @@ public class AudioBook extends Book {
         this.narrator = narrator;
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(double length) {
         this.length = length;
     }
 
