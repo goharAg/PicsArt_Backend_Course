@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
-public class PaperBookService {
+public class PaperBookService extends Service {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/paperbookFile";
     private HashSet<Book> allPaperBooks;
     private FileService fs = new FileService();
@@ -31,7 +31,7 @@ public class PaperBookService {
 
 
 
-    public PaperBook createPaperBook()  {
+    public PaperBook create()  {
         Scanner sc = new Scanner(System.in);
         System.out.print("Input title: ");
         String title = sc.nextLine();
@@ -76,7 +76,8 @@ public class PaperBookService {
 
 
 
-    public void printFullInfo(PaperBook ab){
+    public void printFullInfo(Book abb){
+        PaperBook ab = (PaperBook) abb;
         System.out.print(ab.getTitle() + " " );
         System.out.print("by " + ab.getAuthor());
         System.out.print(" : " + ab.getGenre());
@@ -86,12 +87,9 @@ public class PaperBookService {
 
     }
 
-    public void printShortInfo(PaperBook ab){
-        System.out.print(ab.getTitle() + " " );
-        System.out.print("by " + ab.getAuthor() + "\n");
-    }
 
-    public HashSet<Book> allPaperBooks()  {
+
+    public HashSet<Book> allBooks()  {
        return allPaperBooks;
 
     }

@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
-public class AudioBookService {
+public class AudioBookService extends Service {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/audiobookFile";
     FileService fs = new FileService();
     HashSet<Book> allAudioBooks;
@@ -79,7 +79,8 @@ public class AudioBookService {
         }
     }
 
-    public void printFullInfo(AudioBook ab) {
+    public void printFullInfo(Book abb) {
+        AudioBook ab = (AudioBook) abb;
         System.out.print(ab.getTitle() + " ");
         System.out.print("by " + ab.getAuthor());
         System.out.print(" : " + ab.getGenre());
@@ -88,12 +89,8 @@ public class AudioBookService {
 
     }
 
-    public void printShortInfo(AudioBook ab) {
-        System.out.print(ab.getTitle() + " ");
-        System.out.print("by " + ab.getAuthor() + "\n");
-    }
 
-    public HashSet<Book> allAudioBooks() {
+    public HashSet<Book> allBooks() {
         return allAudioBooks;
 
     }

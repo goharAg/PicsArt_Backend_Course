@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
-public class EbookService {
+public class EbookService extends Service {
     private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/ebookFile";
     HashSet<Book> allEBooks;
     FileService fs = new FileService();
@@ -28,7 +28,7 @@ public class EbookService {
         return new Ebook(title,author,genre,lang, format);
     }
 
-    public Ebook createEbook(){
+    public Ebook create(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Input title: ");
         String title = sc.nextLine();
@@ -72,7 +72,8 @@ public class EbookService {
 
 
 
-    public void printFullInfo(Ebook ab){
+    public void printFullInfo(Book abb){
+        Ebook ab = (Ebook) abb;
         System.out.print(ab.getTitle() + " " );
         System.out.print("by " + ab.getAuthor());
         System.out.print(" : " + ab.getGenre());
@@ -81,15 +82,7 @@ public class EbookService {
 
 
     }
-
-    public void printShortInfo(Ebook ab){
-        System.out.print(ab.getTitle() + " " );
-        System.out.print("by " + ab.getAuthor() + "\n");
-    }
-
-
-
-    public HashSet<Book> allEbooks() {
+    public HashSet<Book> allBooks() {
         return allEBooks;
     }
 

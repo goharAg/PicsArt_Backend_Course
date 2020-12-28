@@ -14,9 +14,9 @@ public class Catalog implements Search {
 
 
 
-    private AudioBookService audioService = new AudioBookService();
-    private EbookService ebService = new EbookService();
-    private PaperBookService pbService = new PaperBookService();
+    private Service audioService = new AudioBookService();
+    private Service ebService = new EbookService();
+    private Service pbService = new PaperBookService();
 
     private int size = 0;
 
@@ -26,9 +26,9 @@ public class Catalog implements Search {
     public Catalog()  {
 
     allBooks = new EnumMap<>(BookTypes.class);
-    allBooks.put(BookTypes.AUDIOBOOK, audioService.allAudioBooks());
-    allBooks.put(BookTypes.EBOOK, ebService.allEbooks());
-    allBooks.put(BookTypes.PAPERBOOK, pbService.allPaperBooks());
+    allBooks.put(BookTypes.AUDIOBOOK, audioService.allBooks());
+    allBooks.put(BookTypes.EBOOK, ebService.allBooks());
+    allBooks.put(BookTypes.PAPERBOOK, pbService.allBooks());
 
     }
 
@@ -134,7 +134,7 @@ public class Catalog implements Search {
     }
 
     public void addAudioBook()  {
-       AudioBook ab = audioService.create();
+       Book ab = audioService.create();
         allBooks.get(BookTypes.AUDIOBOOK).add(ab);
         System.out.println("AudioBook added.");
 
@@ -143,22 +143,22 @@ public class Catalog implements Search {
 
 
     public void addEBook()  {
-        Ebook eb = ebService.createEbook();
+        Book eb = ebService.create();
         allBooks.get(BookTypes.EBOOK).add(eb);
         System.out.println("Ebook added.");
 
     }
     public void addPaperBook()  {
-        PaperBook pb =pbService.createPaperBook();
+        Book pb =pbService.create();
         allBooks.get(BookTypes.PAPERBOOK).add(pb);
         System.out.println("PaperBook added.");
 
     }
 
     public void updateAllBooks(){
-        allBooks.replace(BookTypes.AUDIOBOOK, audioService.allAudioBooks());
-        allBooks.replace(BookTypes.EBOOK, ebService.allEbooks());
-        allBooks.replace(BookTypes.PAPERBOOK, pbService.allPaperBooks());
+        allBooks.replace(BookTypes.AUDIOBOOK, audioService.allBooks());
+        allBooks.replace(BookTypes.EBOOK, ebService.allBooks());
+        allBooks.replace(BookTypes.PAPERBOOK, pbService.allBooks());
     }
     private List<Book> getListOfBooks(){
         List<Book> bookList = new ArrayList<Book>() ;
