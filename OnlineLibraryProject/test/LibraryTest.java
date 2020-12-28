@@ -17,6 +17,7 @@ public class LibraryTest {
         boolean loggedIn = false;
 
         while(!loggedIn){
+            System.out.println("Welcome to to your Online Library. ");
             System.out.println("1. Log In");
             System.out.println("2. Register");
 

@@ -89,10 +89,12 @@ public class UserService implements Registration {
 
     @Override
     public void register() {
-        sc.nextLine();
+
         System.out.println("Please input");
-        System.out.print("Full name: ");
-        String fullname = sc.nextLine();
+        System.out.print("First name: ");
+        String firstname = sc.next();
+        System.out.print("Last name: ");
+        String lastname = sc.next();
         System.out.println("Username should contain more than 10 digits");
         System.out.print("Username: ");
         String username = sc.next();
@@ -103,7 +105,7 @@ public class UserService implements Registration {
         System.out.print("Password: ");
         String password = sc.next();
 
-
+        String fullname = firstname + " " + lastname;
         if(validateUsername(username) && validateEmail(email) && validatePassword(password)){
             password = md5(password);
            User newUser = createUser(fullname,username,email,password);
@@ -118,7 +120,7 @@ public class UserService implements Registration {
 
 
         }else {
-            System.out.println("Not valid input");
+            System.out.println("Registration failed. Not valid input");
             return;
         }
 
