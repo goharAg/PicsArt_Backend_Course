@@ -188,6 +188,22 @@ public class Catalog implements Search {
 
         return bookList;
     }
+    public List<Book> sortByRating(){
+
+        List<Book> bookList = getListOfBooks();
+        Collections.sort(bookList, new Comparator<Book>() {
+            @Override
+            public int compare(Book b1, Book b2) {
+                return b2.getRating() - b1.getRating();
+            }
+        });
+
+        for(Book b: bookList){
+            printBookInfo(b);
+        }
+
+        return bookList;
+    }
     public List<Book> sortByAuthor(){
         List<Book> bookList = getListOfBooks();
         Collections.sort(bookList, new Comparator<Book>() {
@@ -215,6 +231,23 @@ public class Catalog implements Search {
         }
         if(b instanceof PaperBook){
             pbService.printFullInfo((PaperBook) b);
+        }
+
+    }
+    public void printFavourites(){
+        boolean found = false;
+        Iterator<Map.Entry<BookTypes, HashSet<Book>>> mapIt = allBooks.entrySet().iterator();
+        while(mapIt.hasNext()){
+            Map.Entry<BookTypes, HashSet<Book>> mapEntry = mapIt.next();
+            for(Book b : mapEntry.getValue()){
+                if(b.getRating() == 5){
+                    printBookInfo(b);
+                    found = true;
+                }
+            }
+        }
+        if(!found){
+            System.out.println("No Favourites yet");
         }
 
     }

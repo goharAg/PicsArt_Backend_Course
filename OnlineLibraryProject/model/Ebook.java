@@ -11,8 +11,8 @@ public class Ebook  extends Book{
 
 
 
-    public Ebook(String title,String author,String genre, String lang,  String format ){
-        super(BookTypes.EBOOK,title, genre, lang, author);
+    public Ebook(String title,String author,String genre, String lang,  String format,int rate ){
+        super(BookTypes.EBOOK,title, genre, lang, author,rate);
         setFormat(format);
 
 

@@ -2,7 +2,7 @@ package OnlineLibraryProject.model;
 
 public class User {
     private String  fullname;
-    //private String surname;
+
     private String username;
     private String email;
     private String password;

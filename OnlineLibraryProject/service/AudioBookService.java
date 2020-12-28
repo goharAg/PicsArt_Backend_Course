@@ -23,8 +23,8 @@ public class AudioBookService extends Service {
     }
 
 
-    public AudioBook create(String title, String author, String genre, String lang, String nar, int len) {
-        AudioBook ab = new AudioBook(title, author, genre, lang, nar, len);
+    public AudioBook create(String title, String author, String genre, String lang, String nar, int len,int rate) {
+        AudioBook ab = new AudioBook(title, author, genre, lang, nar, len, rate);
 
         return ab;
     }
@@ -54,15 +54,19 @@ public class AudioBookService extends Service {
         System.out.print("Input length: ");
         int len = sc.nextInt();
 
+        System.out.println("Out of 5 stars ");
+        System.out.print("Input rating: ");
+        int rate = sc.nextInt();
 
-        AudioBook ab = create(title, author, genre, lang, nar, len);
+
+        AudioBook ab = create(title, author, genre, lang, nar, len,rate);
         fs.write(Paths.get(url), ab);
         allAudioBooks.add(ab);
         return ab;
     }
 
     public AudioBook create(String[] stringParts) {
-        AudioBook ab = create(stringParts[0], stringParts[1], stringParts[2], stringParts[3], stringParts[4], Integer.parseInt(stringParts[5]));
+        AudioBook ab = create(stringParts[0], stringParts[1], stringParts[2], stringParts[3], stringParts[4], Integer.parseInt(stringParts[5]), Integer.parseInt(stringParts[6]));
         return ab;
     }
 
@@ -85,8 +89,8 @@ public class AudioBookService extends Service {
 
     public void printFullInfo(Book abb) {
         AudioBook ab = (AudioBook) abb;
-        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Length: %s hour, read by : %s%n",
-                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getLength(), ab.getNarrator());
+        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Length: %s hour, read by : %s %d/5 %n",
+                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getLength(), ab.getNarrator(),ab.getRating());
 
 
     }

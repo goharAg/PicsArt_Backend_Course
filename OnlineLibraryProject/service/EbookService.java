@@ -24,8 +24,8 @@ public class EbookService extends Service {
     }
 
 
-    public Ebook createEbook(String title, String author,String genre, String lang,String format)  {
-        return new Ebook(title,author,genre,lang, format);
+    public Ebook createEbook(String title, String author,String genre, String lang,String format, int rate)  {
+        return new Ebook(title,author,genre,lang, format,rate);
     }
 
     public Ebook create(){
@@ -45,15 +45,19 @@ public class EbookService extends Service {
 
         System.out.print("Input format: ");
         String format = sc.next();
+        System.out.println("Out of 5 stars ");
+        System.out.print("Input rating: ");
+        int rate = sc.nextInt();
 
-        Ebook ab = createEbook(title,author,genre,lang,format  );
+
+        Ebook ab = createEbook(title,author,genre,lang,format,rate  );
         fs.write(Paths.get(url), ab);
         allEBooks.add(ab);
         return ab;
     }
 
     public Ebook createEbook(String[] stringParts)  {
-        return createEbook(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4]);
+        return createEbook(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4],Integer.parseInt(stringParts[5]));
     }
 
     public void updateEBooks()  {
@@ -76,8 +80,8 @@ public class EbookService extends Service {
 
     public void printFullInfo(Book abb){
         Ebook ab = (Ebook) abb;
-        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Format: %s%n",
-                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getFormat());
+        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Format: %s %d/5 %n",
+                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getFormat(), ab.getRating());
 
 
 

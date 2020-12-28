@@ -24,8 +24,8 @@ public class PaperBookService extends Service {
     }
 
 
-    public PaperBook createPaperBook(String title, String author,String genre, String lang,String pubComp)  {
-        PaperBook ab = new PaperBook(title,author,genre,lang, pubComp);
+    public PaperBook createPaperBook(String title, String author,String genre, String lang,String pubComp,int rate)  {
+        PaperBook ab = new PaperBook(title,author,genre,lang, pubComp,rate);
         return ab;
     }
 
@@ -47,14 +47,17 @@ public class PaperBookService extends Service {
         sc.nextLine();
         System.out.print("Input publishing company: ");
         String format = sc.nextLine();
+        System.out.println("Out of 5 stars ");
+        System.out.print("Input rating: ");
+        int rate = sc.nextInt();
 
-        PaperBook ab = createPaperBook(title,author,genre,lang,format  );
+        PaperBook ab = createPaperBook(title,author,genre,lang,format,rate  );
         fs.write(Paths.get(url), ab);
         return ab;
     }
 
     public PaperBook createPaperBook(String[] stringParts)  {
-        PaperBook ab = createPaperBook(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4]);
+        PaperBook ab = createPaperBook(stringParts[0],stringParts[1],stringParts[2],stringParts[3],stringParts[4],Integer.parseInt(stringParts[5]));
         return ab;
 
     }
@@ -80,8 +83,8 @@ public class PaperBookService extends Service {
 
     public void printFullInfo(Book abb){
         PaperBook ab = (PaperBook) abb;
-        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Publishing company: %s %n",
-                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getPublishingCompany());
+        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Publishing company: %s %d/5 %n",
+                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getPublishingCompany(), ab.getRating());
 
 
 

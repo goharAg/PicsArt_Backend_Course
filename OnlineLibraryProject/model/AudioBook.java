@@ -11,8 +11,8 @@ public class AudioBook extends Book {
 
 
 
-    public AudioBook(String title,String author,  String genre, String lang, String nar, int len ){
-        super(BookTypes.AUDIOBOOK,title, genre, lang, author);
+    public AudioBook(String title,String author,  String genre, String lang, String nar, int len,int rate ){
+        super(BookTypes.AUDIOBOOK,title, genre, lang, author,rate);
         setNarrator(nar);
         setLength(len);
 

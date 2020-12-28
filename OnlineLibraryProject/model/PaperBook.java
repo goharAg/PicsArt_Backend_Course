@@ -8,8 +8,8 @@ public class PaperBook extends Book{
 
     private String publishingCompany;
 
-    public PaperBook(String title,String author ,  String genre, String lang,  String pubComp) {
-        super(BookTypes.PAPERBOOK,title, genre, lang, author);
+    public PaperBook(String title,String author ,  String genre, String lang,  String pubComp,int rate) {
+        super(BookTypes.PAPERBOOK,title, genre, lang, author,rate);
 
         setPublishingCompany(pubComp);
     }

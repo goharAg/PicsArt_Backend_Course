@@ -17,7 +17,7 @@ public class LibraryTest {
         boolean loggedIn = false;
 
         while(!loggedIn){
-            System.out.println("Welcome to to your Online Library. ");
+            System.out.println("Welcome to to your Online L ibrary. ");
             System.out.println("1. Log In");
             System.out.println("2. Register");
 
@@ -42,10 +42,11 @@ public class LibraryTest {
                 System.out.println("2. Show Only AudioBooks");
                 System.out.println("3. Show Only EBooks");
                 System.out.println("4. Show Only PaperBooks");
-                System.out.println("5. Add a Book");
-                System.out.println("6. Search a book");
-                System.out.println("7. Sort Books");
-                System.out.println("8. Quit");
+                System.out.println("5. Show Favorites");
+                System.out.println("6. Add a Book");
+                System.out.println("7. Search a book");
+                System.out.println("8. Sort Books");
+                System.out.println("9. Quit");
 
 
                 int num = sc.nextInt();
@@ -64,6 +65,9 @@ public class LibraryTest {
                         ct.showPaperBooks();
                         break;
                     case 5:
+                        ct.printFavourites();
+                        break;
+                    case 6:
                         boolean answeredCorrectly = false;
                         String type = "";
                         while (!answeredCorrectly) {
@@ -98,7 +102,7 @@ public class LibraryTest {
                         }
                         break;
 
-                    case 6:
+                    case 7:
                         boolean rightInput = false;
                         while (!rightInput) {
                             System.out.println("Do you want to search the book by");
@@ -131,12 +135,13 @@ public class LibraryTest {
 
                         }
                         break;
-                    case 7:
+                    case 8:
                         boolean numChoice = false;
                         while (!numChoice) {
                             System.out.println("Do you want to sort the book by");
                             System.out.println("1. Title ");
                             System.out.println("2. Author");
+                            System.out.println("3. Rating");
 
                             int nch = sc.nextInt();
                             if (nch == 1) {
@@ -147,9 +152,13 @@ public class LibraryTest {
                                 ct.sortByAuthor();
                                 numChoice = true;
                             }
+                            else if (nch == 3) {
+                                ct.sortByRating();
+                                numChoice = true;
+                            }
                         }
                         break;
-                    case 8:
+                    case 9:
                         quit = true;
 
                 }
