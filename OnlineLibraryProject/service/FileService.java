@@ -25,29 +25,39 @@ public class FileService {
     }
 
     public void write(Path p, AudioBook ab)  {
-        String fileText = ab.getTitle() +","+ab.getAuthor()+","+ab.getGenre()+","+ab.getLang()+","+ab.getNarrator()+","+ab.getLength()+"\n" ;
+        StringBuilder fileText = new StringBuilder();
+
+        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getNarrator()).append(",").append(ab.getLength()).append("\n");
         try {
-            Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
+            Files.write(p, fileText.toString().getBytes(), StandardOpenOption.APPEND);
         }catch(IOException e){
+            System.out.println("Problem writing while writing AudioBook");
+            return;
 
         }
     }
 
     public void write(Path p, Ebook ab)  {
-        String  fileText = ab.getTitle() + "," + ab.getAuthor() + "," + ab.getGenre() + "," + ab.getLang() + "," + ab.getFormat() + "\n";
+        StringBuilder fileText = new StringBuilder();
+        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getFormat());
+
         try {
-            Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
+            Files.write(p, fileText.toString().getBytes(), StandardOpenOption.APPEND);
         }catch(IOException e){
+            System.out.println("Problem writing while writing EBook");
             return ;
         }
     }
 
     public void write(Path p, PaperBook ab)  {
-        String fileText = ab.getTitle() +","+ab.getAuthor()+","+ab.getGenre()+","+ab.getLang()+","+ab.getPublishingCompany()+"\n" ;
+        StringBuilder fileText = new StringBuilder();
+        fileText.append(ab.getTitle()).append(",").append(ab.getAuthor()).append(",").append(ab.getGenre()).append(",").append(ab.getLang()).append(",").append(ab.getPublishingCompany());
+
+
         try {
-            Files.write(p, fileText.getBytes(), StandardOpenOption.APPEND);
+            Files.write(p, fileText.toString().getBytes(), StandardOpenOption.APPEND);
         }catch(IOException e){
-            System.out.println("IOException");
+            System.out.println("Problem writing while writing PaperBook");
             return ;
         }
     }

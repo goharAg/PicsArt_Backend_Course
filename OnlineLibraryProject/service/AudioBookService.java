@@ -7,12 +7,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
 public class AudioBookService extends Service {
-    private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/audiobookFile";
+    private static final String url = "OnlineLibraryProject/files/audiobookFile";
     FileService fs = new FileService();
     HashSet<Book> allAudioBooks;
 
@@ -66,7 +67,7 @@ public class AudioBookService extends Service {
     }
 
     public void updateAudioBooks()  {
-        List<String> l;
+        List<String> l = new ArrayList<>();
         try{
             l = fs.read(Paths.get(url));
         }catch(IOException e){
@@ -74,6 +75,9 @@ public class AudioBookService extends Service {
         }
 
         for(String s : l){
+            if(s.isEmpty())
+                continue;
+            System.out.println(s);
             String[] stringParts = s.split("[,]");
             allAudioBooks.add(create(stringParts));
         }
@@ -81,11 +85,9 @@ public class AudioBookService extends Service {
 
     public void printFullInfo(Book abb) {
         AudioBook ab = (AudioBook) abb;
-        System.out.print(ab.getTitle() + " ");
-        System.out.print("by " + ab.getAuthor());
-        System.out.print(" : " + ab.getGenre());
-        System.out.print(" in " + ab.getLang());
-        System.out.print("Length " + ab.getLength() + " read by " + ab.getNarrator() + "\n");
+        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Length: %s hour, read by : %s%n",
+                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getLength(), ab.getNarrator());
+
 
     }
 

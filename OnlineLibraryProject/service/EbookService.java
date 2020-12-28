@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class EbookService extends Service {
-    private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/ebookFile";
+    private static final String url = "OnlineLibraryProject/files/ebookFile";
     HashSet<Book> allEBooks;
     FileService fs = new FileService();
 
@@ -65,6 +65,8 @@ public class EbookService extends Service {
         }
 
         for(String s : l){
+            if(s.isEmpty())
+                continue;
             String[] stringParts = s.split("[,]");
             allEBooks.add(createEbook(stringParts));
         }
@@ -74,11 +76,9 @@ public class EbookService extends Service {
 
     public void printFullInfo(Book abb){
         Ebook ab = (Ebook) abb;
-        System.out.print(ab.getTitle() + " " );
-        System.out.print("by " + ab.getAuthor());
-        System.out.print(" : " + ab.getGenre());
-        System.out.print(" in " + ab.getLang());
-        System.out.print(" Format:  " + ab.getFormat() + "\n");
+        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Format: %s%n",
+                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getFormat());
+
 
 
     }

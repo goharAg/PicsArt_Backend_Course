@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PaperBookService extends Service {
-    private static final String url = "/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/paperbookFile";
+    private static final String url = "OnlineLibraryProject/files/paperbookFile";
     private HashSet<Book> allPaperBooks;
     private FileService fs = new FileService();
 
@@ -69,7 +69,10 @@ public class PaperBookService extends Service {
         }
 
         for(String s : l){
+            if(s.isEmpty())
+                continue;
             String[] stringParts = s.split("[,]");
+
             allPaperBooks.add(createPaperBook(stringParts));
         }
     }
@@ -78,11 +81,9 @@ public class PaperBookService extends Service {
 
     public void printFullInfo(Book abb){
         PaperBook ab = (PaperBook) abb;
-        System.out.print(ab.getTitle() + " " );
-        System.out.print("by " + ab.getAuthor());
-        System.out.print(" : " + ab.getGenre());
-        System.out.print(" in " + ab.getLang());
-        System.out.print(" Format:  " + ab.getPublishingCompany() + "\n");
+        System.out.printf("Title: %s  Author: %s Genre: %s in %s . Publishing company: %s %n",
+                ab.getTitle(),ab.getAuthor(),ab.getGenre(),ab.getLang(),ab.getPublishingCompany());
+
 
 
     }

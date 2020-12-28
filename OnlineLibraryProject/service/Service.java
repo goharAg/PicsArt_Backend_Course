@@ -12,7 +12,7 @@ public abstract class Service {
     public abstract void printFullInfo(Book b);
 
     public void printShortInfo(Book ab){
-        System.out.print(ab.getTitle() + " " );
-        System.out.print("by " + ab.getAuthor() + "\n");
+        System.out.printf("%s  by  %s%n ",ab.getTitle(),ab.getAuthor() );
+
     }
 }

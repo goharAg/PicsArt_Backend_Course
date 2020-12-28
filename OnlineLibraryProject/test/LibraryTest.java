@@ -5,6 +5,7 @@ import OnlineLibraryProject.service.UserService;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.SocketHandler;
 
 public class LibraryTest {
     public static void main(String[] args)  {
@@ -14,6 +15,7 @@ public class LibraryTest {
         UserService us = new UserService();
         boolean quit = false;
         boolean loggedIn = false;
+
         while(!loggedIn){
             System.out.println("1. Log In");
             System.out.println("2. Register");

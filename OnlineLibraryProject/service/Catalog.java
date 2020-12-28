@@ -24,6 +24,9 @@ public class Catalog implements Search {
 
 
     public Catalog()  {
+        audioService = new AudioBookService();
+        ebService = new EbookService();
+        pbService = new PaperBookService();
 
     allBooks = new EnumMap<>(BookTypes.class);
     allBooks.put(BookTypes.AUDIOBOOK, audioService.allBooks());
@@ -160,6 +163,7 @@ public class Catalog implements Search {
         allBooks.replace(BookTypes.EBOOK, ebService.allBooks());
         allBooks.replace(BookTypes.PAPERBOOK, pbService.allBooks());
     }
+
     private List<Book> getListOfBooks(){
         List<Book> bookList = new ArrayList<Book>() ;
         bookList.addAll(allBooks.get(BookTypes.AUDIOBOOK));
@@ -222,7 +226,7 @@ public class Catalog implements Search {
         while(mapIt.hasNext()){
             Map.Entry<BookTypes, HashSet<Book>> mapEntry = mapIt.next();
             for(Book b : mapEntry.getValue()){
-                if(b.getTitle().equals(title)){
+                if(b.getTitle().equalsIgnoreCase(title)){
                     printBookInfo(b);
                     found = true;
                 }
@@ -241,7 +245,7 @@ public class Catalog implements Search {
         while(mapIt.hasNext()){
             Map.Entry<BookTypes, HashSet<Book>> mapEntry = mapIt.next();
             for(Book b : mapEntry.getValue()){
-                if(b.getAuthor().equals(author)){
+                if(b.getAuthor().equalsIgnoreCase(author)){
                     printBookInfo(b);
                     found = true;
                 }
@@ -259,7 +263,7 @@ public class Catalog implements Search {
         while(mapIt.hasNext()){
             Map.Entry<BookTypes, HashSet<Book>> mapEntry = mapIt.next();
             for(Book b : mapEntry.getValue()){
-                if(b.getGenre().equals(genre)){
+                if(b.getGenre().equalsIgnoreCase(genre)){
                     printBookInfo(b);
                     found = true;
                 }

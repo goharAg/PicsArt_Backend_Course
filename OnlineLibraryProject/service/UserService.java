@@ -19,7 +19,7 @@ public class UserService implements Registration {
 
     Scanner sc = new Scanner(System.in);
     FileService fs = new FileService();
-    private static final Path p = Paths.get("/home/gohar/Desktop/PicsArt_Backend_Course/OnlineLibraryProject/files/database.txt");
+    private static final Path p = Paths.get("OnlineLibraryProject/files/database.txt");
     private static HashMap<String,String> users ;
 
     public UserService(){
