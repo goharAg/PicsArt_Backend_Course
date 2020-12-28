@@ -1,5 +1,6 @@
 package OnlineLibraryProject.service;
 
+import OnlineLibraryProject.enumFiles.BookTypes;
 import OnlineLibraryProject.interfaces.Search;
 import OnlineLibraryProject.model.AudioBook;
 import OnlineLibraryProject.model.Book;
@@ -10,45 +11,44 @@ import java.util.*;
 
 
 public class Catalog implements Search {
-    // To be made an ArrayList later
+
+
 
     private AudioBookService audioService = new AudioBookService();
     private EbookService ebService = new EbookService();
     private PaperBookService pbService = new PaperBookService();
-   // private HashSet<Book> ab;
-   // private HashSet<Book> eb;
-    //private HashSet<Book> pb;
+
     private int size = 0;
 
-    private HashMap<String, HashSet<Book>> allBooks;
+    private EnumMap<BookTypes, HashSet<Book>> allBooks;
 
 
     public Catalog()  {
 
-    allBooks = new HashMap<>();
-    allBooks.put("AudioBook", audioService.allAudioBooks());
-    allBooks.put("Ebook", ebService.allEbooks());
-    allBooks.put("PaperBook", pbService.allPaperBooks());
+    allBooks = new EnumMap<>(BookTypes.class);
+    allBooks.put(BookTypes.AUDIOBOOK, audioService.allAudioBooks());
+    allBooks.put(BookTypes.EBOOK, ebService.allEbooks());
+    allBooks.put(BookTypes.PAPERBOOK, pbService.allPaperBooks());
 
     }
 
 
 
     public void viewCatalog(){
-        if(allBooks.get("AudioBook").size() == 0 && allBooks.get("Ebook").size() == 0 && allBooks.get("PaperBook").size() == 0){
+        if(allBooks.get(BookTypes.AUDIOBOOK).size() == 0 && allBooks.get(BookTypes.EBOOK).size() == 0 && allBooks.get(BookTypes.PAPERBOOK).size() == 0){
             System.out.println("There are no books yet");
             return;
         }
 
 
         System.out.println("//// All Books ////");
-        for(Book b: allBooks.get("AudioBook")){
+        for(Book b: allBooks.get(BookTypes.AUDIOBOOK)){
             audioService.printShortInfo((AudioBook) b);
         }
-        for(Book b: allBooks.get("Ebook")){
+        for(Book b: allBooks.get(BookTypes.EBOOK)){
             ebService.printShortInfo((Ebook) b);
         }
-        for(Book b: allBooks.get("PaperBook")){
+        for(Book b: allBooks.get(BookTypes.PAPERBOOK)){
             pbService.printShortInfo((PaperBook) b);
         }
 
@@ -57,7 +57,7 @@ public class Catalog implements Search {
     }
 
     private boolean isEmpty(){
-        if(allBooks.get("AudioBook").size() == 0 && allBooks.get("Ebook").size() == 0 && allBooks.get("PaperBook").size() == 0){
+        if(allBooks.get(BookTypes.AUDIOBOOK).size() == 0 && allBooks.get(BookTypes.EBOOK).size() == 0 && allBooks.get(BookTypes.PAPERBOOK).size() == 0){
             System.out.println("There are no books yet");
             return true;
         }
@@ -98,11 +98,11 @@ public class Catalog implements Search {
 
         System.out.println("/// AudioBooks////");
 
-        if(allBooks.get("AudioBook").size() == 0){
+        if(allBooks.get(BookTypes.AUDIOBOOK).size() == 0){
             System.out.println("There are no Audiobooks");
             return;
         }
-        for(Book b : allBooks.get("AudioBook")){
+        for(Book b : allBooks.get(BookTypes.AUDIOBOOK)){
             audioService.printFullInfo((AudioBook)b);
         }
 
@@ -111,11 +111,11 @@ public class Catalog implements Search {
     public void showEBooks(){
         System.out.println("//// Ebooks ////");
 
-        if(allBooks.get("Ebook").size() == 0){
+        if(allBooks.get(BookTypes.EBOOK).size() == 0){
             System.out.println("There are no Ebooks");
             return;
         }
-        for(Book b : allBooks.get("Ebook")){
+        for(Book b : allBooks.get(BookTypes.EBOOK)){
             ebService.printFullInfo((Ebook)b);
         }
 
@@ -123,11 +123,11 @@ public class Catalog implements Search {
     public void showPaperBooks(){
 
         System.out.println("//// Paper Books ////");
-        if(allBooks.get("PaperBook").size() == 0){
+        if(allBooks.get(BookTypes.PAPERBOOK).size() == 0){
             System.out.println("There are no Paperbooks");
             return;
         }
-        for(Book b : allBooks.get("PaperBook")){
+        for(Book b : allBooks.get(BookTypes.PAPERBOOK)){
             pbService.printFullInfo((PaperBook)b);
         }
 
@@ -135,7 +135,7 @@ public class Catalog implements Search {
 
     public void addAudioBook()  {
        AudioBook ab = audioService.create();
-        allBooks.get("AudioBook").add(ab);
+        allBooks.get(BookTypes.AUDIOBOOK).add(ab);
         System.out.println("AudioBook added.");
 
     }
@@ -144,24 +144,61 @@ public class Catalog implements Search {
 
     public void addEBook()  {
         Ebook eb = ebService.createEbook();
-        allBooks.get("Ebook").add(eb);
+        allBooks.get(BookTypes.EBOOK).add(eb);
         System.out.println("Ebook added.");
 
     }
     public void addPaperBook()  {
         PaperBook pb =pbService.createPaperBook();
-        allBooks.get("PaperBook").add(pb);
+        allBooks.get(BookTypes.PAPERBOOK).add(pb);
         System.out.println("PaperBook added.");
 
     }
 
     public void updateAllBooks(){
-        allBooks.replace("AudioBook", audioService.allAudioBooks());
-        allBooks.replace("Ebook", ebService.allEbooks());
-        allBooks.replace("PaperBook", pbService.allPaperBooks());
+        allBooks.replace(BookTypes.AUDIOBOOK, audioService.allAudioBooks());
+        allBooks.replace(BookTypes.EBOOK, ebService.allEbooks());
+        allBooks.replace(BookTypes.PAPERBOOK, pbService.allPaperBooks());
+    }
+    private List<Book> getListOfBooks(){
+        List<Book> bookList = new ArrayList<Book>() ;
+        bookList.addAll(allBooks.get(BookTypes.AUDIOBOOK));
+        bookList.addAll(allBooks.get(BookTypes.EBOOK));
+        bookList.addAll(allBooks.get(BookTypes.PAPERBOOK));
+        return bookList;
     }
 
+    public List<Book> sortByTitle(){
 
+        List<Book> bookList = getListOfBooks();
+        Collections.sort(bookList, new Comparator<Book>() {
+            @Override
+            public int compare(Book b1, Book b2) {
+                return b1.getTitle().compareToIgnoreCase(b2.getTitle());
+            }
+        });
+
+        for(Book b: bookList){
+            printBookInfo(b);
+        }
+
+        return bookList;
+    }
+    public List<Book> sortByAuthor(){
+        List<Book> bookList = getListOfBooks();
+        Collections.sort(bookList, new Comparator<Book>() {
+            @Override
+            public int compare(Book b1, Book b2) {
+                return b1.getAuthor().compareToIgnoreCase(b2.getAuthor());
+            }
+        });
+
+        for(Book b: bookList){
+            printBookInfo(b);
+        }
+
+        return bookList;
+    }
 
 
 
@@ -181,9 +218,9 @@ public class Catalog implements Search {
     @Override
     public void searchByTitle(String title) {
         boolean found = false;
-        Iterator<Map.Entry<String, HashSet<Book>>> mapIt = allBooks.entrySet().iterator();
+        Iterator<Map.Entry<BookTypes, HashSet<Book>>> mapIt = allBooks.entrySet().iterator();
         while(mapIt.hasNext()){
-            Map.Entry<String, HashSet<Book>> mapEntry = mapIt.next();
+            Map.Entry<BookTypes, HashSet<Book>> mapEntry = mapIt.next();
             for(Book b : mapEntry.getValue()){
                 if(b.getTitle().equals(title)){
                     printBookInfo(b);
@@ -200,9 +237,9 @@ public class Catalog implements Search {
     @Override
     public void searchByAuthor(String author) {
         boolean found = false;
-        Iterator<Map.Entry<String, HashSet<Book>>> mapIt = allBooks.entrySet().iterator();
+        Iterator<Map.Entry<BookTypes, HashSet<Book>>> mapIt = allBooks.entrySet().iterator();
         while(mapIt.hasNext()){
-            Map.Entry<String, HashSet<Book>> mapEntry = mapIt.next();
+            Map.Entry<BookTypes, HashSet<Book>> mapEntry = mapIt.next();
             for(Book b : mapEntry.getValue()){
                 if(b.getAuthor().equals(author)){
                     printBookInfo(b);
@@ -218,9 +255,9 @@ public class Catalog implements Search {
     @Override
     public void searchByGenre(String genre) {
         boolean found = false;
-        Iterator<Map.Entry<String, HashSet<Book>>> mapIt = allBooks.entrySet().iterator();
+        Iterator<Map.Entry<BookTypes, HashSet<Book>>> mapIt = allBooks.entrySet().iterator();
         while(mapIt.hasNext()){
-            Map.Entry<String, HashSet<Book>> mapEntry = mapIt.next();
+            Map.Entry<BookTypes, HashSet<Book>> mapEntry = mapIt.next();
             for(Book b : mapEntry.getValue()){
                 if(b.getGenre().equals(genre)){
                     printBookInfo(b);

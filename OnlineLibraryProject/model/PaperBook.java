@@ -1,5 +1,7 @@
 package OnlineLibraryProject.model;
 
+import OnlineLibraryProject.enumFiles.BookTypes;
+
 import java.util.Date;
 
 public class PaperBook extends Book{
@@ -7,7 +9,7 @@ public class PaperBook extends Book{
     private String publishingCompany;
 
     public PaperBook(String title,String author ,  String genre, String lang,  String pubComp) {
-        super("PaperBook",title, genre, lang, author);
+        super(BookTypes.PAPERBOOK,title, genre, lang, author);
 
         setPublishingCompany(pubComp);
     }

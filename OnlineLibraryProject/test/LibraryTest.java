@@ -42,7 +42,8 @@ public class LibraryTest {
                 System.out.println("4. Show Only PaperBooks");
                 System.out.println("5. Add a Book");
                 System.out.println("6. Search a book");
-                System.out.println("7. Quit");
+                System.out.println("7. Sort Books");
+                System.out.println("8. Quit");
 
 
                 int num = sc.nextInt();
@@ -69,6 +70,7 @@ public class LibraryTest {
                             System.out.println("1. AudioBook");
                             System.out.println("2. Ebook");
                             System.out.println("3. PaperBook");
+                            System.out.println("4. Back");
 
                             int n = sc.nextInt();
 
@@ -85,12 +87,13 @@ public class LibraryTest {
                                 type = "PaperBook";
                                 answeredCorrectly = true;
                                 ct.addBook(type);
-                            } else {
+                            }
+                            else if (n == 4) {
+                                answeredCorrectly = true;
+                            }else {
                                 System.out.println("Else" + n);
                             }
                         }
-
-
                         break;
 
                     case 6:
@@ -125,12 +128,27 @@ public class LibraryTest {
                             }
 
                         }
-
-
                         break;
                     case 7:
-                        quit = true;
+                        boolean numChoice = false;
+                        while (!numChoice) {
+                            System.out.println("Do you want to sort the book by");
+                            System.out.println("1. title ");
+                            System.out.println("2. author");
 
+                            int nch = sc.nextInt();
+                            if (nch == 1) {
+                                ct.sortByTitle();
+                                numChoice = true;
+
+                            } else if (nch == 2) {
+                                ct.sortByAuthor();
+                                numChoice = true;
+                            }
+                        }
+                        break;
+                    case 8:
+                        quit = true;
 
                 }
             }

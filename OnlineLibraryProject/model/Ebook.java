@@ -1,5 +1,7 @@
 package OnlineLibraryProject.model;
 
+import OnlineLibraryProject.enumFiles.BookTypes;
+
 import java.util.Date;
 
 public class Ebook  extends Book{
@@ -10,7 +12,7 @@ public class Ebook  extends Book{
 
 
     public Ebook(String title,String author,String genre, String lang,  String format ){
-        super("Ebook",title, genre, lang, author);
+        super(BookTypes.EBOOK,title, genre, lang, author);
         setFormat(format);
 
 

@@ -1,5 +1,7 @@
 package OnlineLibraryProject.model;
 
+import OnlineLibraryProject.enumFiles.BookTypes;
+
 import java.util.Objects;
 
 public abstract class Book {
@@ -7,9 +9,9 @@ public abstract class Book {
     private String genre;
     private String lang;
     private String author;
-    private String type;
+    private BookTypes type;
 
-    public Book(String type, String title,  String genre, String lang, String author) {
+    public Book(BookTypes type, String title,  String genre, String lang, String author) {
         this.type = type;
         setTitle(title);
         setAuthor(author);

@@ -1,5 +1,7 @@
 package OnlineLibraryProject.model;
 
+import OnlineLibraryProject.enumFiles.BookTypes;
+
 import java.util.Date;
 
 public class AudioBook extends Book {
@@ -10,7 +12,7 @@ public class AudioBook extends Book {
 
 
     public AudioBook(String title,String author,  String genre, String lang, String nar, int len ){
-        super("AudioBook",title, genre, lang, author);
+        super(BookTypes.AUDIOBOOK,title, genre, lang, author);
         setNarrator(nar);
         setLength(len);
 
