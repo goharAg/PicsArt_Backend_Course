@@ -1,6 +1,6 @@
 function Admin(){
 
-    this.showAllUsers(){
+    this.showAllUsers = function(){
 
     }
 
