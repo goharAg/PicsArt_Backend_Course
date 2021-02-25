@@ -1,0 +1,29 @@
+Fill in PORT variable in .env file or it will run on port 3000 
+
+
+
+GET request example
+    Gets all the users
+        http://localhost:3000/api/users/   
+    
+    Gets user by id 1
+        http://localhost:3000/api/users/id/1   
+
+    Gets user by name Gohar
+        http://localhost:3000/api/users/name/Gohar
+
+
+POST request
+
+    Expects JSON object
+    Creates new user and returns all users
+        http://localhost:3000/api/users/  
+
+PUT request
+    Expects JSON object
+    Updates user by id 1 and returns updated user
+        http://localhost:3000/api/users/id/1
+
+DELETE request        
+   Deletes user by id 1 and returns all users
+        http://localhost:3000/api/users/id/1
