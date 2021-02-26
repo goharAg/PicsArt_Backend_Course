@@ -2,94 +2,70 @@ const express = require("express");
 const uuid = require("uuid");
 
 const router = express.Router();
-const users = require("../models/users.js");
+//const users = require("../models/users.js");
+const filesServices = require("../services/filesServices.js");
+const usersServices = require("../services/usersServices")
 
 
 
 //Gets all users
 router.get("/", (req, res) =>{
-    res.status(200).json(users);
+    res.status(200).json(usersServices.getAllUsers());
 });
 
 
 //Gets user by id
-router.get("/id/:id", (req, res) =>{
-    const found = users.some(user => user.id === req.params.id);
-
-    if (found){
-        res.status(200).json(users.filter(user=>user.id === req.params.id));
-    }else{
-        res.status(400).json({msg: `User of id ${req.params.id} not found`});    
+router.get("/:id", (req, res) =>{
+    let userById = usersServices.getUserByID(req.params.id);
+    if(!userById){
+       return  res.status(400).json({msg: `User of id ${req.params.id} not found`});    
     }
+
+    res.status(200).json(userById);
+
+   
     
 });
 
-//Gets user by name
-router.get("/name/:name", (req, res) =>{
-    const found = users.some(user => user.name === req.params.name);
 
-    if (found){
-        res.status(200).json(users.filter(user=>user.name === req.params.name));
-    }else{
-        res.status(400).json({msg: `User with name ${req.params.name} not found`});    
-    }
-    
-});
 
 //Create a user
 
 router.post("/", (req,res) =>{
-    const newUser = {
-        name: req.body.name,
-        gmail: req.body.gmail,
-        id : uuid.v4()  
-    }
-
-    if( !newUser.name || !newUser.gmail){
-        return res.status(400).json({msg: `Please include mail and gmail`})
-    }
-
-    users.push(newUser);
-    res.status(200).json(users);
+    try{
+        let newUsers = usersServices.addUser(req.body);
+        res.status(201).json(newUsers);
+    }catch(error){
+        
+        res.status(400).json({msg: `Please include mail and gmail`})
+    }   
+    
     
 });
 
 
 //Update User
-router.put("/id/:id", (req, res) =>{
-    const found = users.some(user => user.id === req.params.id);
-
-    if (found){
-        const updUser = req.body;
-        
-     
-        users.forEach(user => {
-            if(user.id === req.params.id){
-               user.name = updUser.name ? updUser.name : user.name;
-               user.gmail = updUser.gmail ? updUser.gmail : user.gmail;
-            
-               res.status(200).json({msg: `User updated`, user});
-            }
-        });
-
-
-    }else{
-        res.status(400).json({msg: `User of id ${req.params.id} not found`});    
-    }
-    
+router.put("/:id", (req, res) =>{
+  let updatedUsers =usersServices.updateUser(req.params.id, req.body);
+  if(updatedUsers){
+   res.status(200).json({msg: `Users updated`,updatedUsers});
+  }else{
+   res.status(400).json({msg: `User of id ${req.params.id} not found`});   
+  }
 });
 
 
 //Delete specific user
-router.delete("/id/:id", (req, res) =>{
-    const found = users.some(user => user.id === req.params.id);
+router.delete("/:id", (req, res) =>{
+ let deletedUsers =  usersServices.deleteUser(req.params.id);
 
-    if (found){
-        res.status(200).json({msg: `User Deleted`, users : users.filter(user=>user.id !== parseInt(req.params.id))});
-    }else{
-        res.status(400).json({msg: `User of id ${req.params.id} not found`});    
+    if(deletedUsers){
+        res.status(200).json({msg: `User Deleted`, deletedUsers });
     }
-    
+    else{
+
+        res.status(400).json({msg: `User of id ${req.params.id} not found`});  
+    }
 });
 
 
