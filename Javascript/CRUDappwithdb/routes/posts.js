@@ -1,6 +1,5 @@
 const express = require('express');
 
-
 const Post = require("../models/Posts")
 const User = require("../models/Users")
 
@@ -9,8 +8,7 @@ const router  = express.Router()
 //GET ALL POST
 
 router.get("/", async (req, res  )=>{
-    console.log(req.user._id)
-    
+        
     try{
     const posts = await Post.find({"author": req.user});
    
