@@ -8,6 +8,7 @@ const mongoose = require('mongoose')
 const postsRouter = require('./routes/posts');
 const authRouter = require("./routes/auth");
 const dashboardRoutes = require("./routes/dashboard");
+const usersRouter = require("./routes/users")
 const verifyToken = require("./middlewares/validate-token")
 
 
@@ -19,10 +20,11 @@ app.use(express.json())
 
 //Route middlewares
  
-app.use("/api/user", authRouter)
+app.use("/api/auth", authRouter)
 
 //protected with token
 app.use("/posts", verifyToken, postsRouter);
+app.use("/users", verifyToken, usersRouter);
 app.use("/api/dashboard", verifyToken, dashboardRoutes)
 
 

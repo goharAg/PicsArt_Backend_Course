@@ -68,13 +68,12 @@ router.post("/", (req, res  )=>{
 
 // UPDATE POST
 
-router.put("/:id",async (req, res  )=>{
-    
+router.put("/:id",async (req, res  )=>{  
     
     try{
         const updatedPost = await  Post.updateOne(
             {_id:req.params.id},
-            {$set:{title:req.body.title}}
+            {$set:req.body, }
             );
         res.json(updatedPost);
     }catch(err){
