@@ -5,7 +5,11 @@ const app = express();
 const mongoose = require('mongoose')
 
 //Import Routes
-const postsRouter = require('./routes/posts')
+const postsRouter = require('./routes/posts');
+const authRouter = require("./routes/auth");
+const dashboardRoutes = require("./routes/dashboard");
+const verifyToken = require("./routes/validate-token")
+
 
 
 
@@ -13,8 +17,12 @@ const postsRouter = require('./routes/posts')
 app.use(express.json())
 
 
-
+//Route middlewares
 app.use("/posts", postsRouter); 
+app.use("/api/user", authRouter)
+
+//protected with token
+app.use("/api/dashboard", verifyToken, dashboardRoutes)
 
 
 //Connection to DB
@@ -26,4 +34,4 @@ mongoose.connect(process.env.DB_CONNECTION,
 
 
 
-app.listen(3000,()=> console.log(`Server started on port ${process.env.PORT}`));
+app.listen(process.env.PORT,()=> console.log(`Server started on port ${process.env.PORT}`));
