@@ -1,23 +1,30 @@
 const express = require('express');
 
+
 const Post = require("../models/Posts")
+const User = require("../models/Users")
 
 const router  = express.Router()
 
-router.get("/", (req, res  )=>{
-    const posts = Post.find();
+//GET ALL POST
 
-    posts.then(data=>{
-        res.json(data);
-    })
-    .catch(err=>{
-        res.json({msg:err})
-    })
+router.get("/", async (req, res  )=>{
+    console.log(req.user._id)
+    
+    try{
+    const posts = await Post.find({"author": req.user});
+   
+    res.json(posts);
+
+    }catch(err){
+        
+        res.status(400).json({msg:err})
+    }
     
 });
+//GET POST BY ID
 
-router.get("/:id",async (req, res  )=>{
-    
+router.get("/:id",async (req, res  )=>{   
     
     try{
         const post = await  Post.findById(req.params.id);
@@ -28,22 +35,38 @@ router.get("/:id",async (req, res  )=>{
    
 });
 
+
+// CREATE POST
 router.post("/", (req, res  )=>{
+    
+    
     const newPost = new Post({
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        author: req.user._id,
     });
-    console.log(newPost)
+   
 
     newPost.save()
     .then(data =>{
-        res.json(data);
+       
+        req.user.posts.push(newPost)
+
+        req.user.save()
+        .then(d =>{
+            res.json({data,"msg": "user updated"});
+        })
+       
     })
     .catch(err=>{
         console.log(err)
     })
+    
+    
    
 });
+
+// UPDATE POST
 
 router.put("/:id",async (req, res  )=>{
     
@@ -61,13 +84,34 @@ router.put("/:id",async (req, res  )=>{
 });
 
 
+// DELETE POST
+
 router.delete("/:id",async (req, res  )=>{
+
+    try{
+        const post = await Post.findById(req.params.id);
+    }catch(err){
+        res.status(404).json("Post Id not valid");
+    }
     
     
     try{
-        const removedPost = await  Post.remove({_id:req.params.id});
-        res.json(removedPost);
+        const myUser = await User.updateOne(
+            {_id : req.user._id},
+            { $pull: { posts:  req.params.id } },
+            { multi: true }
+        );  
+
+        const removedPost = await  Post.findByIdAndDelete(req.params.id);
+        
+            
+       
+        res.json({"msg": "user updated", removedPost});       
+
+
+        
     }catch(err){
+        console.log(err)
         res.json({msg:err})
     }
    
