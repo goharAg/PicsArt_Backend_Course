@@ -35,7 +35,7 @@ router.get("/recent",async (req, res  )=>{
         res.status(404).json(post);
         }
     }catch(err){
-        res.json({msg:err})
+        res.status(404).json({msg:err})
     }
    
 });
@@ -45,9 +45,9 @@ router.get("/:id",async (req, res  )=>{
     
     try{
         const post = await  Post.findById(req.params.id);
-        res.json(post);
+        res.status(200).json(post);
     }catch(err){
-        res.json({msg:err})
+        res.status(404).json({msg:err})
     }
    
 });
@@ -65,7 +65,7 @@ router.get("/:id/photo",async (req, res  )=>{
         else{ res.status(404).json({"msg":"Photo not found"})  }
        
     }catch(err){
-        res.json({msg:err})
+        res.status(404).json({msg:err})
     }
    
 });
@@ -93,16 +93,16 @@ router.post("/",upload.single('photo'), (req, res  )=>{
 
         req.user.save()
         .then(d =>{
-            res.json({data,"msg": "user updated"});
+            res.status(201).json({data,"msg": "user updated, post created"});
         }).catch(err =>{
             console.log(err)
-            res.json({"msg":err})
+            res.status(404).json({"msg":err})
         })
        
     })
     .catch(err=>{
         console.log(err)
-        res.json({"msg":err})
+        res.status(404).json({"msg":err})
     })
     
     
@@ -138,9 +138,9 @@ router.put("/:id",async (req, res  )=>{
             {_id:req.params.id},
             {$set:req.body, }
             );
-        res.json(updatedPost);
+        res.status(200).json(updatedPost);
     }catch(err){
-        res.json({msg:err})
+        res.status(404).json({msg:err})
     }
    
 });
@@ -158,7 +158,7 @@ router.delete("/:id/photo",async (req, res  )=>{
         else{ res.status(404).json({"msg":"Photo not found"})  }
        
     }catch(err){
-        res.json({msg:err})
+        res.status(404).json({msg:err})
     }
    
 });
@@ -186,13 +186,13 @@ router.delete("/:id",async (req, res  )=>{
         
             
        
-        res.json({"msg": "user updated", removedPost});       
+        res.status(200).json({"msg": "user updated", removedPost});       
 
 
         
     }catch(err){
         console.log(err)
-        res.json({msg:err})
+        res.status(404).json({msg:err})
     }
    
 });

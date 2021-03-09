@@ -6,7 +6,7 @@ router.get("/", async(req,res) =>{
         try{
         const posts = await Post.find().select({"_id":0, "author":0});
        
-        res.json(posts);
+        res.status(200).json(posts);
     
         }catch(err){
             console.log(err)

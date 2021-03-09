@@ -4,7 +4,7 @@ const User = require("../models/Users")
 
 
 // GET MY INFO
-router.get("/myInfo", async (req,res)=>{  
+router.get("/info", async (req,res)=>{  
     console.log("searching my Info")
     res.status(200).json(req.user);  
 });
