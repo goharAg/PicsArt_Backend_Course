@@ -1,5 +1,6 @@
 In the .env file fill in PORT, DB_CONNECTION and TOKEN_SECRET
 
+Photos should only be .jpg files
 
 REQUEST EXAMPLES
 
