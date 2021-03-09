@@ -30,7 +30,7 @@ router.put("/edit", async (req,res)=>{
 //GET USER BY ID
 router.get("/:id", async (req,res)=>{
     try{
-        const user = await User.findById(req.params.id);
+        const user = await User.findOne({_id:req.params.id},{password:0});
         res.status(200).json(user);
     }catch(err){
         res.status(404).json({"msg" : "Id not found"});
