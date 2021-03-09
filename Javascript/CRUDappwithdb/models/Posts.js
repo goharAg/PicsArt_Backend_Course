@@ -9,7 +9,7 @@ const PostSchema = mongoose.Schema({
         required: false
     },
     photo:{
-        type:String,
+        type:Buffer,
         required:false,
     },
     author:{

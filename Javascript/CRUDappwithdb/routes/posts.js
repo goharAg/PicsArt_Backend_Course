@@ -1,9 +1,11 @@
 const express = require('express');
-
+const multer = require('multer')
 const Post = require("../models/Posts")
 const User = require("../models/Users")
 
 const router  = express.Router()
+
+const upload = multer();
 
 //GET ALL POST
 
@@ -20,6 +22,23 @@ router.get("/", async (req, res  )=>{
     }
     
 });
+
+//GET Recent Post
+
+router.get("/recent",async (req, res  )=>{   
+    
+    try{
+        const post = await  Post.findOne({}).sort({date: -1});
+        if(!post){
+            res.status(404).json("not found");
+        }else{
+        res.status(404).json(post);
+        }
+    }catch(err){
+        res.json({msg:err})
+    }
+   
+});
 //GET POST BY ID
 
 router.get("/:id",async (req, res  )=>{   
@@ -33,15 +52,37 @@ router.get("/:id",async (req, res  )=>{
    
 });
 
+//GET POST'S PHOTO
+
+router.get("/:id/photo",async (req, res  )=>{   
+    
+    try{
+        const post = await  Post.findById(req.params.id);
+        if(post.photo) {  
+            res.set('Content-Type', 'image/jpg; charset=UTF-8');
+            res.status(200).sendFile(post.photo);
+        }
+        else{ res.status(404).json({"msg":"Photo not found"})  }
+       
+    }catch(err){
+        res.json({msg:err})
+    }
+   
+});
+
 
 // CREATE POST
-router.post("/", (req, res  )=>{
-    
+router.post("/",upload.single('photo'), (req, res  )=>{
+    let file;
+    if(req.file){
+        file = req.file.buffer;
+    }
     
     const newPost = new Post({
         title: req.body.title,
         description: req.body.description,
         author: req.user._id,
+        photo:file,
     });
    
 
@@ -53,14 +94,38 @@ router.post("/", (req, res  )=>{
         req.user.save()
         .then(d =>{
             res.json({data,"msg": "user updated"});
+        }).catch(err =>{
+            console.log(err)
+            res.json({"msg":err})
         })
        
     })
     .catch(err=>{
         console.log(err)
+        res.json({"msg":err})
     })
     
     
+   
+});
+
+//ADD POST'S PHOTO
+
+router.post("/:id/photo",upload.single('photo'),async (req, res  )=>{   
+    
+    try{
+        const post = await  Post.findById(req.params.id);
+        try{
+            post.photo = req.file.buffer;
+            await post.save();
+            res.status(201).json(post);
+        }catch(err){
+            res.status(400).json({msg:err});
+        }
+       
+    }catch(err){
+        res.status(404).json({msg:err})
+    }
    
 });
 
@@ -74,6 +139,24 @@ router.put("/:id",async (req, res  )=>{
             {$set:req.body, }
             );
         res.json(updatedPost);
+    }catch(err){
+        res.json({msg:err})
+    }
+   
+});
+
+//DELETE POST'S PHOTO
+
+router.delete("/:id/photo",async (req, res  )=>{   
+    
+    try{
+        const post = await  Post.findById(req.params.id);
+        if(post.photo) {  
+            post.photo = undefined;
+            res.status(200).json(post);
+        }
+        else{ res.status(404).json({"msg":"Photo not found"})  }
+       
     }catch(err){
         res.json({msg:err})
     }
