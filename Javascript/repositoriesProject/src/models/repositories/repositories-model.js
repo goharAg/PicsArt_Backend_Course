@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const RepoSchema = mongoose.Schema({
+    id:{
+        type:Number,
+        required:true
+    },
     name:{
         type:String,
         requred:true,
@@ -8,6 +12,15 @@ const RepoSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    owner_name:{
+        type:String,
+        required:true,
+    },
+    owner_id:{
+        type:Number,
+        required:true
+    },
+
 
 });
 

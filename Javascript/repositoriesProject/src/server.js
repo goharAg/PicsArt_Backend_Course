@@ -1,4 +1,4 @@
-require('dotenv');
+require('dotenv').config();
 
 
 const express = require('express');
@@ -9,6 +9,7 @@ const configs = require('./configs');
 const router = require('./routes/router');
 const RepoModel = require("./models/repositories/repositories-model");
 const cacheData = require("./utils/cache-data");
+
 
 
 const subscriber = redis.createClient();
@@ -24,29 +25,40 @@ app.use(router);
 
 //Redis client listens to changes in db collection
 subscriber.on('message', async function (channel, message) {
-
-  console.log(`${message} recieved`);
-  await cacheData()
+  if(channel == "countChanged"){
+      
+      console.log(`${message} recieved`);
+      await cacheData()
+  }
 
  });
 
 //Redis client subscribed to countChanged channel
  subscriber.subscribe('countChanged');
 
- 
 
-configs.connectDB 
-  .then(() => {
-    console.log('MongoDB is connected');
 
-    app.listen(configs.env.PORT,async () => {      
-      console.log(`Server is running ${configs.env.PORT}`);
+(async()=>{
+    try{
+        await configs.connectDB ;
+        console.log('MongoDB is connected');
 
-      // caches count when connected to server
-      await cacheData()     
+        await cacheData()     
 
-    });
-  })
-  .catch(err => console.log(err));
+        app.listen(configs.env.PORT, () => {      
+          console.log(`Server is running ${configs.env.PORT}`);
+
+        });
+
+    }
+    catch(err){
+      console.log(err)
+    }
+})()
+
+
+
+
+
 
   

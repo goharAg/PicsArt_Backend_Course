@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon src/server",
     "start": "node src/server",
-    "collect:repositories": "node src/_scripts/collect-repositories"
+    "collect:repositories": "node scripts/collect-repositories"
   },
   "keywords": [],
   "author": "",
