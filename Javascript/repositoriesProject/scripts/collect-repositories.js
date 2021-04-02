@@ -1,30 +1,22 @@
-require('dotenv').config();
-const configs = require('../src/configs');
+require("dotenv").config();
+const configs = require("../src/configs");
 const requestRepos = require("./loadRepos");
 const processRepos = require("./processRepos");
 const saveRepos = require("./saveRepos");
 const redisClient = require("./redis");
 
 (async () => {
-  try{
-      await configs.connectDB;
-      
-      const repos = await requestRepos();
-      
-      const mappedRepos = processRepos(repos);
-      
-      await saveRepos(mappedRepos)      
+  try {
+    await configs.connectDB;
 
-      redisClient.notifyAPI();
+    const repos = await requestRepos();
 
-  }catch(err){
-    console.log(err)
+    const mappedRepos = processRepos(repos);
+
+    await saveRepos(mappedRepos);
+
+    redisClient.notifyAPI();
+  } catch (err) {
+    console.log(err);
   }
-
-})()
-
-
-
-
-
-
+})();

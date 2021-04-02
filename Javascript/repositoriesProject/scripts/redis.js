@@ -7,7 +7,7 @@ publisher.on("error", function (error) {
 });
 
 module.exports.notifyAPI = function () {
-    publisher.publish('countChanged', 'Repos saved in db', function () {
-      console.log("published")
-    });
-  }
+  publisher.publish("countChanged", "Repos saved in db", function () {
+    console.log("published");
+  });
+};

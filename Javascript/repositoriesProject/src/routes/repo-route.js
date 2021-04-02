@@ -1,10 +1,8 @@
+const express = require("express");
+const repoRoutes = express.Router();
 
-const express = require('express')
-const repoRoutes = express.Router()
+const repoCtrl = require("../controllers/repo-controller");
 
-const repoCtrl = require('../controllers/repo-controller');
+repoRoutes.get("/api/repos", repoCtrl.getCount);
 
-
-repoRoutes.get('/api/repos', repoCtrl.getCount);
-
-module.exports = repoRoutes
+module.exports = repoRoutes;
